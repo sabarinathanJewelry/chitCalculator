@@ -65,30 +65,85 @@
         }
 
     /* Table styling */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 30px;
-      font-size: 14px;
-    }
-    th, td {
-      padding: 8px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
-    th {
-      background-color: #4CAF50;
-      color: #fff;
-    }
-    td {
-      background-color: #f9f9f9;
-    }
-    tr:nth-child(even) td {
-      background-color: #f2f2f2;
-    }
-    tr:hover td {
-      background-color: #d9eaf7;
-    }
+    .table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
+  margin-bottom: 20px; /* Add spacing below the table */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  font-size: 14px;
+  min-width: 600px; /* Set a minimum width for better readability */
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+td {
+  background-color: #f9f9f9;
+}
+
+tr:nth-child(even) td {
+  background-color: #f2f2f2;
+}
+
+tr:hover td {
+  background-color: #d9eaf7;
+}
+
+/* Responsive styling for smaller screens */
+@media screen and (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+  }
+
+  table, th, td {
+    font-size: 12px; /* Adjust font size for smaller screens */
+  }
+}
+
+@media screen and (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+    display: block; /* Stack rows on smaller screens */
+  }
+
+  thead tr {
+    display: none; /* Hide table headers */
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    border: none;
+    padding: 8px;
+  }
+
+  td::before {
+    content: attr(data-label); /* Add labels for each cell using the "data-label" attribute */
+    font-weight: bold;
+    margin-right: 10px;
+  }
+}
+
 
     /* Total weight display */
     .total {
@@ -122,56 +177,8 @@
   .total {
     background-size: 200% 200%;
   }
-
-
-    /* Mobile responsiveness */
-    @media screen and (max-width: 768px) {
-      table, th, td {
-        font-size: 14px;
-      }
-      .container {
-        padding: 15px;
-      }
-      input[type="number"] {
-        font-size: 14px;
-        padding: 10px;
-      }
-    }
      /* Responsive adjustments for smaller screens */
   @media (max-width: 600px) {
-    table, thead, tbody, th, td, tr {
-      display: block;
-    }
-
-    thead tr {
-      display: none; /* Hide table headers */
-    }
-
-    tbody tr {
-      margin-bottom: 15px;
-      display: block;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 10px;
-    }
-
-    td {
-      display: flex;
-      justify-content: space-between;
-      text-align: left;
-      border: none;
-      border-bottom: 1px solid #ddd;
-    }
-
-    td:last-child {
-      border-bottom: none;
-    }
-
-    td::before {
-      content: attr(data-label);
-      font-weight: bold;
-      margin-right: 10px;
-    }
     .total {
       font-size: 16px;
       padding: 10px;
@@ -391,6 +398,7 @@
         </div>
       </div>
     </div>
+    <div class="table-container">
     <table ng-show="showTable1">
       <thead>
         <tr>
@@ -401,17 +409,17 @@
       </thead>
       <tbody>
         <tr ng-repeat="entry in rateData">
-          <td>{{ entry.month }}</td>
-          <td>{{ entry.rate | number:0 }}</td>
+          <td data-label="Month">{{ entry.month }}</td>
+          <td data-label="Rate">{{ entry.rate | number:0 }}</td>
           <!-- Calculate weight only if amount and rate are valid -->
-          <td>
+          <td data-label="Weight">
             <span ng-if="amount && entry.rate">{{ (amount / entry.rate) | number:3 }}</span>
             <span ng-if="!amount || !entry.rate">-</span>
           </td>
         </tr>
       </tbody>
     </table>
-
+  </div>
     <!-- Second Table to display data -->
     <h3 ng-show="show2324">2023-2024 RATE HISTORY</h3>
      <!-- Total Weight Display -->
@@ -433,6 +441,7 @@
         </div>
       </div>
     </div>
+    <div class="table-container">
     <table ng-show="show2324">
       <thead>
         <tr>
@@ -443,16 +452,17 @@
       </thead>
       <tbody>
         <tr ng-repeat="entry in rate2324">
-          <td>{{ entry.date }}</td>
-          <td>{{ entry.rate | number:0 }}</td>
+          <td data-label="Date">{{ entry.date }}</td>
+          <td data-label="Rate">{{ entry.rate | number:0 }}</td>
           <!-- Calculate weight only if amount and rate are valid -->
-          <td>
+          <td data-label="Weight">
             <span ng-if="amount && entry.rate">{{ (amount / entry.rate) | number:3 }}</span>
             <span ng-if="!amount || !entry.rate">-</span>
           </td>
         </tr>
       </tbody>
     </table>
+    </div>
      <!-- Second Table to display data -->
      <h3 ng-show="show2324">2023 RATE HISTORY</h3>
     <div ng-show="show2324" class="total">
@@ -473,6 +483,7 @@
         </div>
       </div>
     </div>
+    <div class="table-container">
     <table ng-show="show2324">
       <thead>
         <tr>
@@ -483,16 +494,17 @@
       </thead>
       <tbody>
         <tr ng-repeat="entry in rate23">
-          <td>{{ entry.date }}</td>
-          <td>{{ entry.rate | number:0 }}</td>
+          <td data-label="Date">{{ entry.date }}</td>
+          <td data-label="Rate">{{ entry.rate | number:0 }}</td>
           <!-- Calculate weight only if amount and rate are valid -->
-          <td>
+          <td data-label="Weight">
             <span ng-if="amount && entry.rate">{{ (amount / entry.rate) | number:3 }}</span>
             <span ng-if="!amount || !entry.rate">-</span>
           </td>
         </tr>
       </tbody>
     </table>
+    </div>
     <!-- Second Table to display data -->
     <h3 ng-show="show2324">2022 RATE HISTORY</h3>
     <div ng-show="show2324" class="total">
@@ -513,6 +525,7 @@
         </div>
       </div>
     </div>
+    <div class="table-container">
     <table ng-show="show2324">
       <thead>
         <tr>
@@ -523,16 +536,17 @@
       </thead>
       <tbody>
         <tr ng-repeat="entry in rate22">
-          <td>{{ entry.date }}</td>
-          <td>{{ entry.rate | number:0 }}</td>
+          <td data-label="Date">{{ entry.date }}</td>
+          <td data-label="Rate">{{ entry.rate | number:0 }}</td>
           <!-- Calculate weight only if amount and rate are valid -->
-          <td>
+          <td data-label="Weight">
             <span ng-if="amount && entry.rate">{{ (amount / entry.rate) | number:3 }}</span>
             <span ng-if="!amount || !entry.rate">-</span>
           </td>
         </tr>
       </tbody>
     </table>
+    </div>
    <div class="footer">
       <div class="footer-content">
         <div class="footer-left">
