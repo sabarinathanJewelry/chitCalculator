@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chit Calculator with AngularJS</title>
+  <link rel="icon" href="tigerlogo.ico?v=2" type="image/x-icon">
+  <!-- Include AngularJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+
+  <style>
+    /* Base styling for the page */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7fa;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1,h2 {
+      text-align: center;
+      color: #4CAF50;
+    }
+   h3 {
+      text-align: center;
+      color: #4CAF50;
+    }
+
+    /* Input field styling */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      font-size: 16px;
+      color: #555;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: #f9f9f9;
+    }
+    input[type="number"]:focus {
+      border-color: #4CAF50;
+      outline: none;
+      background-color: #fff;
+    }
+    /* Image responsiveness */
+        img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #4CAF50;
+      color: #fff;
+    }
+    td {
+      background-color: #f9f9f9;
+    }
+    tr:nth-child(even) td {
+      background-color: #f2f2f2;
+    }
+    tr:hover td {
+      background-color: #d9eaf7;
+    }
+
+    /* Total weight display */
+    .total {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 15px 0;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    background: linear-gradient(135deg, #4caf50, #2196f3, #ff5722);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    animation: gradient-animation 5s infinite linear;
+    position: relative;
+  }
+
+  /* Add some fun gradient animation */
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .total {
+    background-size: 200% 200%;
+  }
+
+
+    /* Mobile responsiveness */
+    @media screen and (max-width: 768px) {
+      table, th, td {
+        font-size: 14px;
+      }
+      .container {
+        padding: 15px;
+      }
+      input[type="number"] {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+     /* Responsive adjustments for smaller screens */
+  @media (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+
+    thead tr {
+      display: none; /* Hide table headers */
+    }
+
+    tbody tr {
+      margin-bottom: 15px;
+      display: block;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    td {
+      display: flex;
+      justify-content: space-between;
+      text-align: left;
+      border: none;
+      border-bottom: 1px solid #ddd;
+    }
+
+    td:last-child {
+      border-bottom: none;
+    }
+
+    td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .total {
+      font-size: 16px;
+      padding: 10px;
+    }
+  }
+    /* Footer content layout */
+.footer {
+    background-color: #2d2d2d; /* Dark background for footer */
+    color: #fff; /* White text for contrast */
+    font-family: 'Arial', sans-serif;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.footer-left,
+.footer-right {
+    flex: 1;
+    padding: 10px;
+    max-width: 45%; /* Restrict width for larger screens */
+}
+
+.footer-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: FFFFFF;/* Gold color for title */
+}
+.footer-sub {
+    font-size: 22px;
+    font-weight: bold;
+    background-color: #CC9933;	
+    color:#2d2d2d ;
+    padding-left:20px;
+   
+}
+.footer-line {
+ border-top: 1px #2d2d2d; /* Line thickness and color */
+ padding-top: 1px; /* Space between the line and text */
+ color:#CC9933;	/* Gold color for title */
+}
+
+.footer-address,
+.footer-delivery,
+.footer-contact {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* Footer bottom section */
+.footer-bottom {
+    font-size: 14px;
+    color: #bbb;
+}
+
+/* Contact number link */
+.contact-number {
+    color: #FFD700;
+    text-decoration: none;
+}
+
+.contact-number:hover {
+    text-decoration: underline;
+}
+/* Footer Link Styling */
+.footer-link {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.footer-link-text {
+    color: #FFD700;
+    text-decoration: none;
+}
+
+.footer-link-text:hover {
+    text-decoration: underline;
+    color: #4CAF50; /* Change color on hover for better UX */
+}
+.footer-btn {
+    display: inline-block;
+    background-color: #4CAF50; /* Green button color */
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+/* Button hover effect */
+.footer-btn:hover {
+    background-color: #45a049; /* Darker green */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+/* Button active effect (when clicked) */
+.footer-btn:active {
+    background-color: #3e8e41; /* Even darker green when clicked */
+    transform: translateY(0); /* Reset position after click */
+}
+  /* Styling for buttons */
+  .toggle-button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      text-align: center;
+    }
+
+    .toggle-button.active {
+      background-color: #28a745;
+    }
+
+    .toggle-button:hover {
+      background-color: #0056b3;
+      transform: scale(1.1);
+    }
+
+    .toggle-button:active {
+      background-color: #004085;
+      transform: scale(1);
+    }
+
+    /* Text changes on toggle */
+    .toggle-button span {
+      font-weight: bold;
+    }
+.fireworks {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+  }
+
+  .fireworks div {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: yellow;
+    border-radius: 50%;
+    animation: explode 1s ease-out infinite;
+  }
+  .total input[type="number"] {
+      width: 70px;
+      text-align: center;
+    }
+  .fireworks div:nth-child(1) { top: 50%; left: 0%; animation-delay: 0s; }
+  .fireworks div:nth-child(2) { top: 0%; left: 50%; animation-delay: 0.1s; }
+  .fireworks div:nth-child(3) { top: 50%; right: 0%; animation-delay: 0.2s; }
+  .fireworks div:nth-child(4) { bottom: 0%; left: 50%; animation-delay: 0.3s; }
+  .fireworks div:nth-child(5) { top: 25%; left: 25%; animation-delay: 0.4s; }
+  .fireworks div:nth-child(6) { top: 25%; right: 25%; animation-delay: 0.5s; }
+  .fireworks div:nth-child(7) { bottom: 25%; left: 25%; animation-delay: 0.6s; }
+  .fireworks div:nth-child(8) { bottom: 25%; right: 25%; animation-delay: 0.7s; }
+
+  @keyframes explode {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+  </style>
+</head>
+<body ng-app="rateApp" ng-controller="rateController">
+  <div class="container">
+    <!-- Image with Responsiveness -->
+    <img src="logo.png" alt="Logo"/>
+
+    <h1>Chit Calculator</h1>
+    <h2>No Wastage scheme</h2>
+
+    <!-- Input for Amount -->
+    <div class="form-group">
+      <label for="amount">Chit Amount (₹):</label>
+      <input type="number" id="amount" ng-model="amount" placeholder="Enter Amount" min="1000" ng-init="amount = 5000"/>
+    </div>
+
+    <button class="toggle-button" ng-class="{'active': isActive}" ng-click="toggleTables()">
+      <span>{{ showTable1 ? 'Show History' : 'Show Forcast' }}</span>
+    </button>
+   
+
+    <!-- Table to display dates, rates, and calculated weight -->
+    <h3 ng-show="showTable1">Forcast for this year </h3>
+     <!-- Total Weight Display -->
+     <div ng-show="showTable1" class="total">
+      Total Weight: {{ getTotalWeight(rateData) | number:3 }} gram
+      <div>
+        <span>For <input type="number" class="wast" id="percentage" ng-model="wastage" placeholder="Enter wastage" max="18" ng-init="wastage = 10"/></span>
+       % Product, Saved Amount: {{ savedAmount(rateData) | number:0 }} ₹
+        <!-- Fireworks container -->
+        <div class="fireworks" ng-show="savedAmount(rateData) > 0">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <table ng-show="showTable1">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Rate</th>
+          <th>Weight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="entry in rateData">
+          <td>{{ entry.month }}</td>
+          <td>{{ entry.rate | number:0 }}</td>
+          <!-- Calculate weight only if amount and rate are valid -->
+          <td>
+            <span ng-if="amount && entry.rate">{{ (amount / entry.rate) | number:3 }}</span>
+            <span ng-if="!amount || !entry.rate">-</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Second Table to display data -->
+    <h3 ng-show="show2324">2023-2024 RATE HISTORY</h3>
+     <!-- Total Weight Display -->
+     <div ng-show="show2324" class="total">
+      Total Weight: {{ getTotalWeight(rate2324) | number:3 }} gram
+      <div>
+        <span>For <input type="number" class="wast" id="percentage" ng-model="wastage" placeholder="Enter wastage" max="18" ng-init="wastage = 10"/></span>
+       % Product, Saved Amount: {{ savedAmount(rate2324) | number:0 }} ₹
+        <!-- Fireworks container -->
+        <div class="fireworks" ng-show="savedAmount(rate2324) > 0">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <table ng-show="show2324">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Rate</th>
+          <th>Weight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="entry in rate2324">
+          <td>{{ entry.date }}</td>
+          <td>{{ entry.rate | number:0 }}</td>
+          <!-- Calculate weight only if amount and rate are valid -->
+          <td>
+            <span ng-if="amount && entry.rate">{{ (amount / entry.rate) | number:3 }}</span>
+            <span ng-if="!amount || !entry.rate">-</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+     <!-- Second Table to display data -->
+     <h3 ng-show="show2324">2023 RATE HISTORY</h3>
+    <div ng-show="show2324" class="total">
+      Total Weight: {{ getTotalWeight(rate23) | number:3 }} gram
+      <div>
+        <span>For <input type="number" class="wast" id="percentage" ng-model="wastage" placeholder="Enter wastage" max="18" ng-init="wastage = 10"/></span>
+       % Product, Saved Amount: {{ savedAmount(rate23) | number:0 }} ₹
+        <!-- Fireworks container -->
+        <div class="fireworks" ng-show="savedAmount(rate23) > 0">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <table ng-show="show2324">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Rate</th>
+          <th>Weight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="entry in rate23">
+          <td>{{ entry.date }}</td>
+          <td>{{ entry.rate | number:0 }}</td>
+          <!-- Calculate weight only if amount and rate are valid -->
+          <td>
+            <span ng-if="amount && entry.rate">{{ (amount / entry.rate) | number:3 }}</span>
+            <span ng-if="!amount || !entry.rate">-</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Second Table to display data -->
+    <h3 ng-show="show2324">2022 RATE HISTORY</h3>
+    <div ng-show="show2324" class="total">
+      Total Weight: {{ getTotalWeight(rate22) | number:3 }} gram
+      <div>
+        <span>For <input type="number" class="wast" id="percentage" ng-model="wastage" placeholder="Enter wastage" max="18" ng-init="wastage = 10"/></span>
+       % Product, Saved Amount: {{ savedAmount(rate22) | number:0 }} ₹
+        <!-- Fireworks container -->
+        <div class="fireworks" ng-show="savedAmount(rate22) > 0">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <table ng-show="show2324">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Rate</th>
+          <th>Weight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="entry in rate22">
+          <td>{{ entry.date }}</td>
+          <td>{{ entry.rate | number:0 }}</td>
+          <!-- Calculate weight only if amount and rate are valid -->
+          <td>
+            <span ng-if="amount && entry.rate">{{ (amount / entry.rate) | number:3 }}</span>
+            <span ng-if="!amount || !entry.rate">-</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+   <div class="footer">
+      <div class="footer-content">
+        <div class="footer-left">
+          <p class="footer-title">SABARINATHAN</p>
+          <p class="footer-sub">JEWELLERS</p>
+          <p class="footer-address">166, Nethaji Road, Madurai-1</p>
+        </div>
+        <div class="footer-right">
+          <p class="footer-delivery">We do online delivery too!</p>
+          <p class="footer-contact">Please contact: <a href="tel:+917010100677" class="contact-number">+917010100677</a></p>
+            <p class="footer-link"><a href="MeasuringYourRingSize.pdf"  class="footer-btn" download>Download Our Ring size chart</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Sabarinathan Jewellers. All Rights Reserved.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Define AngularJS application
+    angular.module('rateApp', [])
+      .controller('rateController', function($scope) {
+        // Initialize the amount to 0
+        $scope.amount = 1000;
+        $scope.wastage = 10;
+        $scope.buttonText = "Show History"
+        // Initialize visibility of tables
+        $scope.showTable1 = true;
+        $scope.show2324 = false;
+
+        // Sample array of date and rate
+        $scope.rate2324 = [
+          { date: '01-08-2023', rate: 5590 },
+          { date: '01-09-2023', rate: 5560 },
+          { date: '04-10-2023', rate: 5350 },
+          { date: '01-11-2023', rate: 5640 },
+          { date: '01-12-2023', rate: 5810 },
+          { date: '01-01-2024', rate: 5870 },
+          { date: '02-02-2024', rate: 5930 },
+          { date: '02-03-2024', rate: 5870 },
+          { date: '01-04-2024', rate: 6370 },
+          { date: '07-05-2024', rate: 6610 },
+          { date: '02-06-2024', rate: 6710 }
+        ];
+        $scope.rate23 = [
+          { date: '15-01-2023', rate: 5260 },
+          { date: '02-02-2023', rate: 5410 },
+          { date: '01-03-2023', rate: 5235 },
+          { date: '03-04-2023', rate: 5470 },
+          { date: '01-05-2023', rate: 5630 },
+          { date: '03-06-2023', rate: 5630 },
+          { date: '06-07-2023', rate: 5520 },
+          { date: '01-08-2023', rate: 5590 },
+          { date: '01-09-2023', rate: 5560 },
+          { date: '04-10-2023', rate: 5350 },
+          { date: '01-11-2023', rate: 5640 }
+        ];
+        $scope.rate22 = [
+          { date: '14-01-2022', rate: 4550 },
+          { date: '01-02-2022', rate: 4520 },
+          { date: '03-03-2022', rate: 4790 },
+          { date: '01-04-2022', rate: 4825 },
+          { date: '04-05-2022', rate: 4815 },
+          { date: '06-06-2022', rate: 4795 },
+          { date: '05-07-2022', rate: 4820 },
+          { date: '03-08-2022', rate: 4802 },
+          { date: '06-09-2022', rate: 4790 },
+          { date: '04-10-2022', rate: 4775 },
+          { date: '01-11-2022', rate: 4720 }
+        ];
+
+       $scope.rateData = [
+          { month: 1,rate: 7080},
+          { month: 2,rate: 7285},
+          { month: 3,rate: 7300 },
+          { month: 4,rate: 7405 },
+          { month: 5,rate: 7455 },
+          { month: 6,rate: 7200 },
+          { month: 7,rate: 7300 },
+          { month: 8,rate: 7500 },
+          { month: 9,rate: 7800 },
+          { month: 10,rate: 7855 },
+          { month: 11,rate: 8000 }
+        ];
+
+        // Function to calculate the total weight
+        $scope.getTotalWeight = function(yearData) {
+          var totalWeight = 0;
+	        var currentScope =yearData// $scope.showTable1? $scope.rateData :$scope.rate2324
+          angular.forEach(currentScope, function(entry) {
+            if ($scope.amount && entry.rate) {
+              totalWeight += $scope.amount / entry.rate;
+            }
+          });
+          return totalWeight;
+        };
+
+        $scope.savedAmount = function(yearData) {
+        var totalWeight = 0;
+        var currentScope =yearData// $scope.showTable1? $scope.rateData :$scope.rate2324
+        angular.forEach(currentScope, function(entry) {
+            if ($scope.amount && entry.rate) {
+              totalWeight += $scope.amount / entry.rate;
+            }
+          });
+        var finalRate = currentScope.length ? currentScope[currentScope.length - 1].rate : null;
+        var bTax = (((((finalRate*$scope.wastage)/100)+finalRate))*totalWeight)+200;
+        var aTax =((bTax*3)/100)+bTax;
+        var og =  ($scope.amount*11);
+        var ov =((og*3)/100)+og;
+        return aTax -ov ;
+       };
+        // Function to toggle between tables
+        $scope.toggleTables = function() {
+          $scope.showTable1 = !$scope.showTable1;
+          $scope.show2324 = !$scope.show2324;
+          $scope.buttonText = $scope.showTable1 ? "Show History" : "Show Forcast";
+        };
+      });
+  </script>
+</body>
+</html>
