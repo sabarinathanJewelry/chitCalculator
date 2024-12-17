@@ -669,7 +669,7 @@ tr:hover td {
       const rate23= $scope.rate23.map((entry) => entry.rate);
       const weight23 = $scope.rate23.map((entry) => ($scope.amount / entry.rate).toFixed(3));
 
-      const ctx23 = document.getElementById('2324Chart').getContext('2d');
+      const ctx23 = document.getElementById('23Chart').getContext('2d');
       new Chart(ctx23, {
         type: 'line', // Choose chart type (line, bar, etc.)
         data: {
@@ -739,7 +739,7 @@ tr:hover td {
       const rate2324= $scope.rate2324.map((entry) => entry.rate);
       const weight2324 = $scope.rate2324.map((entry) => ($scope.amount / entry.rate).toFixed(3));
 
-      const ctx23214 = document.getElementById('23Chart').getContext('2d');
+      const ctx23214 = document.getElementById('rate2324').getContext('2d');
       new Chart(ctx23214, {
         type: 'line', // Choose chart type (line, bar, etc.)
         data: {
