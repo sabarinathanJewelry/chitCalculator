@@ -7,6 +7,7 @@
   <link rel="icon" href="tigerlogo.ico?v=2" type="image/x-icon">
   <!-- Include AngularJS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     /* Base styling for the page */
@@ -64,13 +65,6 @@
             margin-bottom: 20px;
         }
 
-    /* Table styling */
-    /* .table-container {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch; 
-  margin-bottom: 20px;
-} */
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -104,10 +98,7 @@ tr:hover td {
 
 /* Responsive styling for smaller screens */
 @media screen and (max-width: 768px) {
-  /* .table-container {
-    overflow-x: auto;
-  } */
-
+ 
   table, th, td {
     font-size: 12px; /* Adjust font size for smaller screens */
   }
@@ -398,6 +389,8 @@ tr:hover td {
         </div>
       </div>
     </div>
+    <canvas ng-show="showTable1" id="rateChart" width="400" height="200"></canvas>
+
     <div class="table-container">
     <table ng-show="showTable1">
       <thead>
@@ -422,6 +415,7 @@ tr:hover td {
   </div>
     <!-- Second Table to display data -->
     <h3 ng-show="show2324">2023-2024 RATE HISTORY</h3>
+   
      <!-- Total Weight Display -->
      <div ng-show="show2324" class="total">
       Total Weight: {{ getTotalWeight(rate2324) | number:3 }} gram
@@ -441,6 +435,7 @@ tr:hover td {
         </div>
       </div>
     </div>
+    <canvas ng-show="show2324" id="2324Chart" width="400" height="200"></canvas>
     <div class="table-container">
     <table ng-show="show2324">
       <thead>
@@ -483,6 +478,7 @@ tr:hover td {
         </div>
       </div>
     </div>
+    <canvas ng-show="show2324" id="23Chart" width="400" height="200"></canvas>
     <div class="table-container">
     <table ng-show="show2324">
       <thead>
@@ -525,6 +521,7 @@ tr:hover td {
         </div>
       </div>
     </div>
+    <canvas ng-show="show2324" id="22Chart" width="400" height="200"></canvas>
     <div class="table-container">
     <table ng-show="show2324">
       <thead>
@@ -632,11 +629,151 @@ tr:hover td {
           { month: 10,rate: 7855 },
           { month: 11,rate: 8000 }
         ];
+      const labels = $scope.rateData.map((entry) => entry.month);
+      const rates = $scope.rateData.map((entry) => entry.rate);
+      const weights = $scope.rateData.map((entry) => ($scope.amount / entry.rate).toFixed(3));
 
+      // Initialize the chart
+      const ctx = document.getElementById('rateChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line', // Choose chart type (line, bar, etc.)
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Rate (₹)',
+              data: rates,
+              borderColor: '#4CAF50',
+              backgroundColor: 'rgba(76, 175, 80, 0.2)',
+              fill: true,
+            },
+            {
+              label: 'Weight (grams)',
+              data: weights,
+              borderColor: '#2196F3',
+              backgroundColor: 'rgba(33, 150, 243, 0.2)',
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+          },
+        },
+      });
+      const label23 = $scope.rate23.map((entry) => entry.date);
+      const rate23= $scope.rate23.map((entry) => entry.rate);
+      const weight23 = $scope.rate23.map((entry) => ($scope.amount / entry.rate).toFixed(3));
+
+      const ctx23 = document.getElementById('2324Chart').getContext('2d');
+      new Chart(ctx23, {
+        type: 'line', // Choose chart type (line, bar, etc.)
+        data: {
+          labels: label23,
+          datasets: [
+            {
+              label: 'Rate (₹)',
+              data: rate23,
+              borderColor: '#4CAF50',
+              backgroundColor: 'rgba(76, 175, 80, 0.2)',
+              fill: true,
+            },
+            {
+              label: 'Weight (grams)',
+              data: weight23,
+              borderColor: '#2196F3',
+              backgroundColor: 'rgba(33, 150, 243, 0.2)',
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+          },
+        },
+      });
+      const label22 = $scope.rate22.map((entry) => entry.date);
+      const rate22= $scope.rate22.map((entry) => entry.rate);
+      const weight22 = $scope.rate22.map((entry) => ($scope.amount / entry.rate).toFixed(3));
+
+      const ctx22 = document.getElementById('22Chart').getContext('2d');
+      new Chart(ctx22, {
+        type: 'line', // Choose chart type (line, bar, etc.)
+        data: {
+          labels: label22,
+          datasets: [
+            {
+              label: 'Rate (₹)',
+              data: rate22,
+              borderColor: '#4CAF50',
+              backgroundColor: 'rgba(76, 175, 80, 0.2)',
+              fill: true,
+            },
+            {
+              label: 'Weight (grams)',
+              data: weight22,
+              borderColor: '#2196F3',
+              backgroundColor: 'rgba(33, 150, 243, 0.2)',
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+          },
+        },
+      });
+      const label2324 = $scope.rate2324.map((entry) => entry.date);
+      const rate2324= $scope.rate2324.map((entry) => entry.rate);
+      const weight2324 = $scope.rate2324.map((entry) => ($scope.amount / entry.rate).toFixed(3));
+
+      const ctx23214 = document.getElementById('23Chart').getContext('2d');
+      new Chart(ctx23214, {
+        type: 'line', // Choose chart type (line, bar, etc.)
+        data: {
+          labels: label2324,
+          datasets: [
+            {
+              label: 'Rate (₹)',
+              data: rate2324,
+              borderColor: '#4CAF50',
+              backgroundColor: 'rgba(76, 175, 80, 0.2)',
+              fill: true,
+            },
+            {
+              label: 'Weight (grams)',
+              data: weight2324,
+              borderColor: '#2196F3',
+              backgroundColor: 'rgba(33, 150, 243, 0.2)',
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+          },
+        },
+      });
         // Function to calculate the total weight
         $scope.getTotalWeight = function(yearData) {
           var totalWeight = 0;
-	        var currentScope =yearData// $scope.showTable1? $scope.rateData :$scope.rate2324
+	        var currentScope = yearData// $scope.showTable1? $scope.rateData :$scope.rate2324
           angular.forEach(currentScope, function(entry) {
             if ($scope.amount && entry.rate) {
               totalWeight += $scope.amount / entry.rate;
