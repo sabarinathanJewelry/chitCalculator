@@ -364,7 +364,7 @@ tr:hover td {
     </div>
 
     <button class="toggle-button" ng-class="{'active': isActive}" ng-click="toggleTables()">
-      <span>{{ showTable1 ? 'Show History' : 'Show Forcast' }}</span>
+      <span>{{ showTable1 ? 'Show History' : 'Show Sample' }}</span>
     </button>
    
 
@@ -794,14 +794,14 @@ tr:hover td {
         var bTax = (((((finalRate*$scope.wastage)/100)+finalRate))*totalWeight)+200;
         var aTax =((bTax*3)/100)+bTax;
         var og =  ($scope.amount*11);
-        var ov =((og*3)/100)+og;
-        return aTax -ov ;
+        //var ov =((og*3)/100)+og;
+        return bTax - og ;
        };
         // Function to toggle between tables
         $scope.toggleTables = function() {
           $scope.showTable1 = !$scope.showTable1;
           $scope.show2324 = !$scope.show2324;
-          $scope.buttonText = $scope.showTable1 ? "Show History" : "Show Forcast";
+          $scope.buttonText = $scope.showTable1 ? "Show History" : "Show Sample";
         };
       });
   </script>
