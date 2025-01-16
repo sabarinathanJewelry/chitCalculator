@@ -391,7 +391,7 @@ tr:hover td {
     </div>
     <!-- Input for Amount -->
     <div class="form-group">
-      <label for="amount">Chit Amount (₹):</label>
+      <label for="amount">Montly Chit Amount (₹):</label>
       <input type="number" id="amount" ng-model="amount" placeholder="Enter Amount" min="1000" ng-init="amount = 5000"/>
     </div>
 
@@ -404,7 +404,7 @@ tr:hover td {
     <h3 ng-show="showTable1">Sample data</h3>
      <!-- Total Weight Display -->
      <div ng-show="showTable1" class="total">
-      Total Weight: {{ getTotalWeight(rateData) | number:3 }} gram
+      Expected Gold Weight: {{ getTotalWeight(rateData) | number:3 }} gram
       <div>
         <span>For <input type="number" class="wast" id="percentage" ng-model="wastage" placeholder="Enter wastage" max="18" ng-init="wastage = 10"/></span>
        % Product, Saved Amount: {{ savedAmount(rateData) | number:0 }} ₹
