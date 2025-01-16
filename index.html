@@ -347,6 +347,15 @@ tr:hover td {
     0% { transform: scale(0); opacity: 1; }
     100% { transform: scale(2); opacity: 0; }
   }
+  /* Container styling */ 
+  .e-con-inner { display: flex; flex-direction: column; align-items: center; background-color: #f8f9fa; padding: 20px; border-radius: 10px; } 
+  /* Heading styling */ .e-con-inner h1 { color: #2c3e50; font-family: 'Arial', sans-serif; margin-bottom: 20px; }
+   /* Image link styling */ .e-con-inner a { margin: 10px; transition: transform 0.3s ease-in-out; }
+    .e-con-inner a:hover { transform: scale(1.05); } 
+    /* Image styling */ .e-con-inner img { border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); } 
+    /* Media query for mobile view */ @media (max-width: 600px) { .e-con-inner { padding: 10px; } 
+    .e-con-inner h1 { font-size: 18px; margin-bottom: 15px; } .e-con-inner a { margin: 5px; } 
+    .e-con-inner img { width: 150px; height: 50px; box-shadow: none; } }
   </style>
 </head>
 <body ng-app="rateApp" ng-controller="rateController">
@@ -356,7 +365,30 @@ tr:hover td {
 
     <h1>Chit Calculator</h1>
     <h2>Golden 11 (No Wastage scheme)</h2>
-
+    <div class="" data-id="9d72ebe" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+      <div class="e-con-inner">
+    <div class="" data-id="029e899" data-element_type="widget" data-widget_type="heading.default">
+    <div class="">
+      <h1 class="">DOWNLOAD THE APP</h1>				</div>
+    </div>
+  <div class="" data-id="6954897" data-element_type="container">
+      <div class="">
+    <div class="" data-id="c3d3dc6" data-element_type="widget" data-widget_type="image.default">
+    <div class="">
+                            <a href="https://play.google.com/store/apps/details?id=com.sabarinathan.chit.twa" target="_blank">
+          <img loading="lazy" decoding="async" width="186" height="59" src="https://sabarinathan.in8.cdn-alpha.com/wp-content/uploads/2024/06/Mobile-app-store-badge-2.png" class="attachment-large size-large wp-image-580" alt="" />								</a>
+                          </div>
+    </div>
+    <div class="" data-id="73d81fd" data-element_type="widget" data-widget_type="image.default">
+    <div class="">
+                            <a href="https://apps.apple.com/in/app/sabarinathan-jewellers/id6740074492" target="_blank">
+          <img loading="lazy" decoding="async" width="186" height="59" src="https://sabarinathan.in8.cdn-alpha.com/wp-content/uploads/2024/06/Mobile-app-store-badge-1-1.png" class="attachment-large size-large wp-image-581" alt="" />								</a>
+                          </div>
+    </div>
+      </div>
+    </div>
+      </div>
+    </div>
     <!-- Input for Amount -->
     <div class="form-group">
       <label for="amount">Chit Amount (₹):</label>
